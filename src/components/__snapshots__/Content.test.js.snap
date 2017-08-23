@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Content properly shows given text 1`] = `
+<p
+  className="App-intro"
+>
+  test content component
+</p>
+`;
