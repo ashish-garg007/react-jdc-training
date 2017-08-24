@@ -1,9 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Content properly shows given text 1`] = `
-<p
-  className="App-intro"
->
-  test content component
-</p>
+exports[`<Content> properly shows given text 1`] = `
+<div>
+  <p
+    className="App-intro"
+  >
+    Unit Tests
+  </p>
+  <p>
+    <input
+      onChange={[Function]}
+      type="text"
+    />
+  </p>
+  <p>
+    <button
+      onClick={[Function]}
+    >
+      Change Title
+    </button>
+  </p>
+</div>
 `;

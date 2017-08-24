@@ -4,18 +4,18 @@ exports[`Header should render properly 1`] = `
 <div
   className="App-header"
 >
-  <img
-    alt="logo"
-    className="App-logo"
-    src="logo.svg"
-  />
   <a
     href="/"
     id="logo"
   >
-    <h2>
-      headers test title
-    </h2>
+    <img
+      alt="logo"
+      className="App-logo"
+      src="logo.svg"
+    />
   </a>
+  <h2>
+    headers test title
+  </h2>
 </div>
 `;
