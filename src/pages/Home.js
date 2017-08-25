@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 export default props => {
-  const { login, auth } = props;
+  const { login, profile } = props;
   const { from } = props.location.state ? props.location.state : { from: '/' };
-  return !auth.isAuthenticated
+  return !profile.isAuthenticated
     ? <div>
         <p className="App-intro">
           <button onClick={login}>Fake Login</button>

@@ -1,11 +1,11 @@
 import React from 'react';
 
 export default props => {
-  const { logout } = props;
+  const { actions } = props;
   return (
     <div>
       <p className="App-intro">
-        <button onClick={logout}>Logout</button>
+        <button onClick={actions.logout}>Logout</button>
       </p>
     </div>
   );

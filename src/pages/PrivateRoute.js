@@ -6,7 +6,7 @@ export default ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        return rest.auth.isAuthenticated
+        return rest.profile.isAuthenticated
           ? rest.render()
           : <Redirect
               to={{

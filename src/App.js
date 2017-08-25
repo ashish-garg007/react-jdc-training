@@ -9,32 +9,36 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Protected from './pages/Protected';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actionCreators from './redux/action';
 
 class App extends Component {
   state = {
-    title: 'Welcome to React JDC Traingin',
-    auth: {
-      isAuthenticated: false
-    }
+    title: 'Welcome to React JDC Traingin'
   };
+
+  componentDidMount() {
+    const { actions } = this.props;
+    if (localStorage['REACT_JDC_TOKEN']) {
+      actions.retrieveProfileFromToken(localStorage['REACT_JDC_TOKEN']);
+    }
+  }
 
   login = (username, password) => {
     //TODO: Your login logic here
-    this.setState({
-      auth: {
-        isAuthenticated: true
-      }
-    });
+    const { actions } = this.props;
+    actions.retrieveProfileFromToken('some_sample_token');
   };
 
-  logout = () => {
-    // TODO: your logout logic
-    this.setState({
-      auth: {
-        isAuthenticated: false
-      }
-    });
-  };
+  // logout = () => {
+  //   // TODO: your logout logic
+  //   this.setState({
+  //     auth: {
+  //       isAuthenticated: false
+  //     }
+  //   });
+  // };
   setTitle = title => {
     this.setState({ title });
   };
@@ -48,31 +52,31 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Header {...this.state} onHeaderClick={this.onHeaderClick} />
+          <Header
+            {...this.state}
+            {...this.props}
+            onHeaderClick={this.onHeaderClick}
+          />
           <nav>
             <Link to="/">Home</Link> | <Link to="/about">About</Link> |{' '}
-            {this.state.auth.isAuthenticated &&
+            {this.props.profile.isAuthenticated &&
               <Link to="/protected">Protected</Link>}
           </nav>
           <Route
             exact
             path="/"
             render={props =>
-              <Home login={this.login} auth={this.state.auth} {...props} />}
+              <Home login={this.login} {...this.props} {...props} />}
           />
           <Route
             path="/about"
-            render={props => <About setTitle={this.setTitle} {...props} />}
+            render={props =>
+              <About setTitle={this.setTitle} {...props} {...this.props} />}
           />
           <PrivateRoute
             path="/protected"
-            auth={this.state.auth}
-            render={props =>
-              <Protected
-                auth={this.state.auth}
-                logout={this.logout}
-                {...props}
-              />}
+            {...this.props}
+            render={props => <Protected {...this.props} {...props} />}
           />
         </div>
       </Router>
@@ -80,4 +84,19 @@ class App extends Component {
   }
 }
 
-export default logProps(App);
+// export default logProps(App);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(actionCreators, dispatch)
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const { profile } = state;
+  return {
+    profile
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(logProps(App));
